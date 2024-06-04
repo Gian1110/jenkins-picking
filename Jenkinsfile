@@ -5,7 +5,7 @@ pipeline {
     
     //server values
         string(name: 'remoteHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'RELEASE_VERSION', defaultValue: 'release/v1.0.0', description: 'version de la applicacion')
+        string(name: 'release_version', defaultValue: 'release/v1.0.0', description: 'version de la applicacion')
         
     }
     environment {
@@ -20,10 +20,11 @@ pipeline {
         stage('Checkout on release') {
             steps {
                 script {
-                    def releaseBranch = params.RELEASE_VERSION
-                    git url: 'https://github.com/Gian1110/jenkins-picking.git', branch: releaseBranch
 
-                env.version_imagen = RELEASE_VERSION.split('v')[1]
+                    def releaseBranch = params.release_version
+                    git url: 'https://github.com/Gian1110/jenkins-picking.git', branch: releaseBranch
+                    env.version_imagen = releaseBranch.split('v')[1]
+
                 }
             }
         }
