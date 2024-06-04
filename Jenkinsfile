@@ -22,7 +22,14 @@ pipeline {
                 script {
 
                     def releaseBranch = params.release_version
-                    git url: 'https://github.com/Gian1110/jenkins-picking.git', branch: releaseBranch
+                    checkout([$class: 'GitSCM', 
+                              branches: [[name: releaseBranch]], 
+                              doGenerateSubmoduleConfigurations: false, 
+                              extensions: [], 
+                              userRemoteConfigs: [[
+                                  url: scm.getUserRemoteConfigs()[0].getUrl()
+                              ]]
+                    ])
                     env.version_imagen = releaseBranch.split('v')[1]
 
                 }
