@@ -18,6 +18,15 @@ pipeline {
     }
     stages {
 
+        stage('Checkout on release') {
+            steps {
+                script {
+                    def releaseBranch = params.RELEASE_VERSION
+                    git url: 'https://github.com/Gian1110/jenkins-picking.git', branch: releaseBranch
+                }
+            }
+        }
+
         stage('docker build and push') {
             steps {
                 script{
