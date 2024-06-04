@@ -14,7 +14,6 @@ pipeline {
         puerto_imagen = '5000'
         path_proyect = './'
           
-        version_imagen = RELEASE_VERSION.split('v')[1]
     }
     stages {
 
@@ -23,6 +22,8 @@ pipeline {
                 script {
                     def releaseBranch = params.RELEASE_VERSION
                     git url: 'https://github.com/Gian1110/jenkins-picking.git', branch: releaseBranch
+
+                env.version_imagen = RELEASE_VERSION.split('v')[1]
                 }
             }
         }
