@@ -20,7 +20,8 @@ pipeline {
         stage('Checkout on release') {
             steps {
                 script {
-                    def parameterMap["release_version":"${params.release_version}"]
+                    def parameterMap = [:]
+                    parameterMap["release_version"] = params.release_version
                     dockerb.checkoutBranch(parameterMap);
                     env.version_imagen = release_version.split('v')[1]
 
