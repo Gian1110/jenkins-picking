@@ -20,17 +20,9 @@ pipeline {
         stage('Checkout on release') {
             steps {
                 script {
-
-                    def releaseBranch = params.release_version
-                    checkout([$class: 'GitSCM', 
-                              branches: [[name: releaseBranch]], 
-                              doGenerateSubmoduleConfigurations: false, 
-                              extensions: [], 
-                              userRemoteConfigs: [[
-                                  url: scm.getUserRemoteConfigs()[0].getUrl()
-                              ]]
-                    ])
-                    env.version_imagen = releaseBranch.split('v')[1]
+                    def parameterMap[release_version:release_version]
+                    dockerb.checkoutBranch(parameterMap);
+                    env.version_imagen = release_version.split('v')[1]
 
                 }
             }
