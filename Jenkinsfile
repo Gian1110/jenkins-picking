@@ -28,15 +28,22 @@ pipeline {
                 }
             }
         }
-
-        stage('prueba') {
-            when {
-                expression {
+        stage('existe version actual') {
+            steps {
+                script {
                     def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
                         parameterMap["imagenVersion"] = params.imagenVersion
-                    return dockerb.dockerVersionContainer(parameterMap);
+                    env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
+                }
+            }
+        }
+
+        stage('prueba') {
+            when {
+                expression {
+                    return equalsVersion;
                 }
             }
             steps {
