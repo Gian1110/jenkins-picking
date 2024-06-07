@@ -16,18 +16,6 @@ pipeline {
           
     }
     stages {
-
-        stage('Checkout on release') {
-            steps {
-                script {
-                    
-                    def parameterMap = [:]
-                    parameterMap["imagenVersion"] = params.imagenVersion
-                    gitJob.checkoutBranch(parameterMap);
-
-                }
-            }
-        }
         stage('existe version actual') {
             steps {
                 script {
@@ -40,21 +28,29 @@ pipeline {
             }
         }
 
-        stage('prueba') {
+        stage('Checkout on release') {
             when {
                 expression {
-                    echo "${equalsVersion}"
                     return env.equalsVersion == "false";
                 }
             }
             steps {
                 script {
-                    echo "hola"
+                    
+                    def parameterMap = [:]
+                    parameterMap["imagenVersion"] = params.imagenVersion
+                    gitJob.checkoutBranch(parameterMap);
+
                 }
             }
         }
 
         stage('docker build and push') {
+            when {
+                expression {
+                    return env.equalsVersion == "false";
+                }
+            }
             steps {
                 script{
                         def parameterMap = [:]
@@ -65,7 +61,13 @@ pipeline {
                 }                                     
             }
         }
+        
         stage('ssh pull') {
+            when {
+                expression {
+                    return env.equalsVersion == "false";
+                }
+            }
             steps {
                 script{
                         def parameterMap = [:]
@@ -81,6 +83,11 @@ pipeline {
         }
 
         stage('ssh rm and run') {
+            when {
+                expression {
+                    return env.equalsVersion == "false";
+                }
+            }
             steps {
                 script{
 
