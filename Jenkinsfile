@@ -36,6 +36,7 @@ pipeline {
                         parameterMap["containerName"] = name_container
                         parameterMap["imagenVersion"] = params.imagenVersion
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
+                    echo "${equalsVersion}"
                 }
             }
         }
@@ -43,7 +44,7 @@ pipeline {
         stage('prueba') {
             when {
                 expression {
-                    return equalsVersion;
+                    return env.equalsVersion;
                 }
             }
             steps {
