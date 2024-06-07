@@ -35,7 +35,7 @@ pipeline {
                     def parameterMap = [:]
                         parameterMap["containerName"] = name_container
                         parameterMap["imagenVersion"] = params.imagenVersion
-                        return dockerb.dockerBuildPush(parameterMap);
+                        return dockerb.dockerVersionContainer(parameterMap);
                 }
             }
             steps {
