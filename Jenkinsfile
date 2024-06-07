@@ -44,7 +44,7 @@ pipeline {
             when {
                 expression {
                     echo "${equalsVersion}"
-                    return env.equalsVersion == "true";
+                    return env.equalsVersion == "false";
                 }
             }
             steps {
