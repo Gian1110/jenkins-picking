@@ -54,6 +54,32 @@ pipeline {
             }
         }
 
+        stage('existe version actual') {
+            steps {
+                script {
+                    def parameterMap = [:]
+                        parameterMap["remoteHost"] = params.remoteHost
+                        parameterMap["containerName"] = name_container
+                        parameterMap["imagenVersion"] = params.imagenVersion
+                    env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
+                }
+            }
+        }
+
+        stage('prueba') {
+            when {
+                expression {
+                    echo "${equalsVersion}"
+                    return equalsVersion;
+                }
+            }
+            steps {
+                script {
+                    echo "hola"
+                }
+            }
+        }
+
         stage('docker build and push') {
             steps {
                 script{
