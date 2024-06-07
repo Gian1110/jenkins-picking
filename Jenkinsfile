@@ -29,6 +29,22 @@ pipeline {
             }
         }
 
+        stage('prueba') {
+            when {
+                expression {
+                    def parameterMap = [:]
+                        parameterMap["containerName"] = name_container
+                        parameterMap["imagenVersion"] = params.imagenVersion
+                        return dockerb.dockerBuildPush(parameterMap);
+                }
+            }
+            steps {
+                script {
+                    echo "hola"
+                }
+            }
+        }
+
         stage('docker build and push') {
             steps {
                 script{
