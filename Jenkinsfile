@@ -33,9 +33,10 @@ pipeline {
             when {
                 expression {
                     def parameterMap = [:]
+                        parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
                         parameterMap["imagenVersion"] = params.imagenVersion
-                        return dockerb.dockerVersionContainer(parameterMap);
+                    return dockerb.dockerVersionContainer(parameterMap);
                 }
             }
             steps {
