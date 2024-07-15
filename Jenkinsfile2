@@ -97,6 +97,7 @@ pipeline {
                 script{
 
                     def parameterMap = [:]
+                    parameterMap["containerName"] = name_container
                     parameterMap["remoteHost"] = params.remoteHost
                     parameterMap["pathYaml"] = params.pathYamlFile
                     dockerb.dockerCompose(parameterMap);
