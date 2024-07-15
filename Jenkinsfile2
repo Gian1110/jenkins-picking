@@ -99,7 +99,7 @@ pipeline {
                     def parameterMap = [:]
                     parameterMap["containerName"] = name_container
                     parameterMap["remoteHost"] = params.remoteHost
-                    parameterMap["pathYaml"] = params.pathYamlFile
+                    parameterMap["pathYaml"] = params.name_container
                     dockerb.dockerCompose(parameterMap);
                     
                     }
