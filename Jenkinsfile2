@@ -3,10 +3,9 @@ pipeline {
   agent any
  parameters {
     // branch
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+        string(name: 'branchName', defaultValue: 'main', description: 'Branch to build')
     //server values
         string(name: 'remoteHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'imagenVersion', defaultValue: '1.0.0', description: 'version de la applicacion')
         
     }
     environment {
@@ -24,7 +23,7 @@ pipeline {
                     def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
-                        parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.branchName
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
                 }
             }
@@ -41,7 +40,7 @@ pipeline {
                         def parameterMap = [:]
                         parameterMap["path"] = path_proyect
                         parameterMap["containerName"] = name_container
-                        parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.branchName
                         dockerb.dockerBuildPush(parameterMap);
                 }                                     
             }
@@ -58,7 +57,7 @@ pipeline {
                         def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
-                        parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.branchName
                         dockerb.dockerPull(parameterMap);
                             
                     }
@@ -78,7 +77,7 @@ pipeline {
 
                     def parameterMap = [:]
                     parameterMap["containerName"] = name_container
-                    parameterMap["imagenVersion"] = params.imagenVersion
+                    parameterMap["branchName"] = params.branchName
                     parameterMap["pathYaml"] = pathYamlFile
                     dockerb.dockerEditYaml(parameterMap);
                     
