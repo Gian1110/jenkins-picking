@@ -78,6 +78,7 @@ pipeline {
 
                     def parameterMap = [:]
                     parameterMap["containerName"] = name_container
+                    parameterMap["imagenVersion"] = params.imagenVersion
                     parameterMap["pathYaml"] = pathYamlFile
                     dockerb.dockerEditYaml(parameterMap);
                     
