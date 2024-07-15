@@ -14,6 +14,7 @@ pipeline {
         name_container = 'picking'
         puerto_imagen = '5000'
         path_proyect = './'
+        pathYamlFile = '/docker/picking/docker-compose.yaml'
           
     }
     stages {
@@ -96,6 +97,7 @@ pipeline {
 
                     def parameterMap = [:]
                     parameterMap["remoteHost"] = params.remoteHost
+                    parameterMap["pathYaml"] = params.pathYamlFile
                     dockerb.dockerCompose(parameterMap);
                     
                     }
