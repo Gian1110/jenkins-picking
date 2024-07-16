@@ -58,7 +58,7 @@ pipeline {
                         def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
-                        parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.branchName
                         dockerb.dockerPull(parameterMap);
                             
                     }
@@ -78,7 +78,7 @@ pipeline {
 
                     def parameterMap = [:]
                     parameterMap["containerName"] = name_container
-                    parameterMap["imagenVersion"] = params.imagenVersion
+                    parameterMap["branchName"] = params.branchName
                     parameterMap["pathYaml"] = pathYamlFile
                     dockerb.dockerEditYaml(parameterMap);
                     
