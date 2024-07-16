@@ -25,6 +25,7 @@ pipeline {
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
                         parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.BRANCH_NAME
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
                 }
             }
