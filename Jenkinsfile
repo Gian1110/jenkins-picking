@@ -22,7 +22,7 @@ pipeline {
                     def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
-                        parameterMap["imagenVersion"] = params.imagenVersion
+                        parameterMap["branchName"] = params.imagenVersion
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
                 }
             }
