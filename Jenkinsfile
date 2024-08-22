@@ -1,6 +1,6 @@
 @Library('jenkins-libs') _
 pipeline {
-  agent any
+  agent { label 'gian-jenkins' }
  parameters {
     
     //server values
