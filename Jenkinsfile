@@ -18,13 +18,16 @@ pipeline {
     stages {
         stage('existe version actual') {
             steps {
-                script {
+                 container('kaniko') {
+                  script {
                     def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
                         parameterMap["branchName"] = params.imagenVersion
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
                 }
+                }
+                
             }
         }
 
