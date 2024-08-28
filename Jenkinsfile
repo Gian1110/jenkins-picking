@@ -1,6 +1,60 @@
 @Library('jenkins-libs') _
 pipeline {
-  agent { label 'gian-jenkins' }
+  agent { 
+        kubernetes {
+            apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    jenkins/agent-type: kaniko
+  namespace: devops-tools-ns
+spec:
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: jnlp
+    image: jenkins/inbound-agent:latest
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      privileged: true
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1024Mi"
+        cpu: "1000m"
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: IfNotPresent
+    command:
+      - /busybox/sleep
+      - infinity
+    tty: true
+    resources:
+      requests:
+        memory: "2048Mi"
+        cpu: "2000m"
+      limits:
+        memory: "4096Mi"
+        cpu: "3000m"
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - name: docker-config
+        mountPath: /kaniko/.docker/
+  - name: kubectl
+    image: bitnami/kubectl:latest
+    imagePullPolicy: IfNotPresent
+    command:
+      - cat
+    tty: true
+  volumes:
+  - name: docker-config
+    secret:
+      secretName: docker-config
+        }
+   }
  parameters {
     
     //server values
@@ -18,14 +72,13 @@ pipeline {
     stages {
         stage('existe version actual') {
             steps {
-                 container('kaniko') {
+                 
                   script {
                     def parameterMap = [:]
                         parameterMap["remoteHost"] = params.remoteHost
                         parameterMap["containerName"] = name_container
                         parameterMap["branchName"] = params.imagenVersion
                     env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
-                }
                 }
                 
             }
