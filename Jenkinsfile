@@ -25,13 +25,6 @@ spec:
     env:
     - name: JENKINS_URL
       value: http://jenkins-service-np.devops-tools-ns.svc.cluster.local:8080
-    - name: JENKINS_AGENT_PORT
-      value: "50000"
-    - name: JENKINS_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: jenkins-agent-secret
-          key: secret
   volumes:
   - name: kaniko-secret
     secret:
@@ -47,7 +40,7 @@ spec:
                     /kaniko/executor \
                       --dockerfile=/workspace/Dockerfile \
                       --context=dir:///workspace/ \
-                      --destination=<your-repo>/<your-image>:<tag>
+                      --destination=myrepo/myimage:latest
                     '''
                 }
             }
