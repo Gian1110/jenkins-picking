@@ -5,18 +5,19 @@ pipeline {
             yaml k8sAgentConfig()
         }
    }
- parameters {
+//  parameters {
     
-    //server values
-        string(name: 'remoteHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'imagenVersion', defaultValue: '1.0.0', description: 'version de la applicacion')
+//     //server values
+//         string(name: 'remoteHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+//         string(name: 'imagenVersion', defaultValue: '1.0.0', description: 'version de la applicacion')
         
-    }
+//     }
     environment {
         // container values
         name_container = 'picking'
         puerto_imagen = '5000'
         path_proyect = './'
+        remoteHost = '192.168.100.173'
           
     }
     stages {
@@ -24,11 +25,12 @@ pipeline {
             steps {
                  
                   script {
-                    def parameterMap = [:]
-                        parameterMap["remoteHost"] = params.remoteHost
-                        parameterMap["containerName"] = name_container
-                        parameterMap["branchName"] = params.imagenVersion
-                    env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
+                    // def parameterMap = [:]
+                    //     parameterMap["remoteHost"] = params.remoteHost
+                    //     parameterMap["containerName"] = name_container
+                    //     parameterMap["branchName"] = params.imagenVersion
+                    // env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
+                    sh 'docker build .'
                 }
                 
             }
