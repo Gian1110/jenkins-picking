@@ -1,115 +1,56 @@
-@Library('jenkins-libs') _
 pipeline {
-  agent { 
+    agent {
         kubernetes {
-            yaml k8sAgentConfig()
+            label 'kaniko-build'
+            defaultContainer 'kaniko'
+            yaml '''
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: some-value
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - name: kaniko-secret
+      mountPath: /kaniko/.docker
+      readOnly: true
+  - name: jenkins-agent
+    image: jenkins/inbound-agent
+    env:
+    - name: JENKINS_URL
+      value: http://jenkins-service-np.devops-tools-ns.svc.cluster.local:8080
+    - name: JENKINS_AGENT_PORT
+      value: "50000"
+    - name: JENKINS_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: jenkins-agent-secret
+          key: secret
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: kaniko-secret
+'''
         }
-   }
-//  parameters {
-    
-//     //server values
-//         string(name: 'remoteHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-//         string(name: 'imagenVersion', defaultValue: '1.0.0', description: 'version de la applicacion')
-        
-//     }
-    environment {
-        // container values
-        name_container = 'picking'
-        puerto_imagen = '5000'
-        path_proyect = './'
-        remoteHost = '192.168.100.173'
-          
     }
     stages {
-        stage('existe version actual') {
+        stage('Build') {
             steps {
-                 
-                  script {
-                    // def parameterMap = [:]
-                    //     parameterMap["remoteHost"] = params.remoteHost
-                    //     parameterMap["containerName"] = name_container
-                    //     parameterMap["branchName"] = params.imagenVersion
-                    // env.equalsVersion = dockerb.dockerVersionContainer(parameterMap);
-                    sh 'docker build .'
+                container('kaniko') {
+                    sh '''
+                    /kaniko/executor \
+                      --dockerfile=/workspace/Dockerfile \
+                      --context=dir:///workspace/ \
+                      --destination=<your-repo>/<your-image>:<tag>
+                    '''
                 }
-                
             }
         }
-
-        // stage('Checkout on release') {
-        //     when {
-        //         expression {
-        //             return env.equalsVersion == "false";
-        //         }
-        //     }
-        //     steps {
-        //         script {
-                    
-        //             def parameterMap = [:]
-        //             parameterMap["imagenVersion"] = params.imagenVersion
-        //             gitJob.checkoutBranch(parameterMap);
-
-        //         }
-        //     }
-        // }
-
-        // stage('docker build and push') {
-        //     when {
-        //         expression {
-        //             return env.equalsVersion == "false";
-        //         }
-        //     }
-        //     steps {
-        //         script{
-        //                 def parameterMap = [:]
-        //                 parameterMap["path"] = path_proyect
-        //                 parameterMap["containerName"] = name_container
-        //                 parameterMap["imagenVersion"] = params.imagenVersion
-        //                 dockerb.dockerBuildPush(parameterMap);
-        //         }                                     
-        //     }
-        // }
-        
-        // stage('ssh pull') {
-        //     when {
-        //         expression {
-        //             return env.equalsVersion == "false";
-        //         }
-        //     }
-        //     steps {
-        //         script{
-        //                 def parameterMap = [:]
-        //                 parameterMap["remoteHost"] = params.remoteHost
-        //                 parameterMap["containerName"] = name_container
-        //                 parameterMap["imagenVersion"] = params.imagenVersion
-        //                 dockerb.dockerPull(parameterMap);
-                            
-        //             }
-                    
-        //         }  
-            
-        // }
-
-        // stage('ssh rm and run') {
-        //     when {
-        //         expression {
-        //             return env.equalsVersion == "false";
-        //         }
-        //     }
-        //     steps {
-        //         script{
-
-        //             def parameterMap = [:]
-        //             parameterMap["remoteHost"] = params.remoteHost
-        //             parameterMap["containerName"] = name_container
-        //             parameterMap["imagenVersion"] = params.imagenVersion
-        //             parameterMap["containerPuert"] = puerto_imagen
-        //             dockerb.dockerRmRun(parameterMap);
-                    
-        //             }
-        //         }  
-            
-        // }
     }
-
-    }
+}
