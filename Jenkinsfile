@@ -14,12 +14,13 @@ pipeline {
     stages {
         stage('existe version actual') {
             steps {
-                 
-                  script {
-                    sh 'docker build .'
+                 container('kaniko') {
+                    script {
+                    sh 'executor --dockerfile Dockerfile --context . --destination=192.168.100.223:8083/prueba:gian'
                     echo "hola mundo ${name_container}"
+                    }
                 }
-                
+                  
             }
     }
 
