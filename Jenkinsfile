@@ -17,7 +17,7 @@ pipeline {
                  container('kaniko') {
                     script {
                     sh 'ls -la'
-                    sh 'executor --dockerfile Dockerfile --context . --destination=192.168.100.223:8083/prueba:gian'
+                    sh 'executor --dockerfile Dockerfile --context . --destination=192.168.100.223:8083/prueba:gian --force'
                     echo "hola mundo ${name_container}"
                     }
                 }
