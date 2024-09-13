@@ -49,7 +49,7 @@ pipeline {
                     parameterMap["network"] = params.network
                     parameterMap["remoteHost"] = params.remoteHost
                     parameterMap["pathYaml"] = params.pathYaml
-                    dockerb.createYaml(parameterMap)
+                    dockerb.dockerEditYaml(parameterMap)
                     }
                     
                 }  
