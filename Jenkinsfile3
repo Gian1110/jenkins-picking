@@ -1,0 +1,59 @@
+@Library('jenkins-libs') _
+pipeline {
+  agent any
+ parameters {
+    //server values
+        string(name: 'remoteHost', defaultValue: 'host129b', description: 'dns o ip del host')
+        string(name: 'containerName', defaultValue: 'cotodigitalback_picking', description: 'dns o ip del host')
+        string(name: 'containerPort', defaultValue: '5000', description: 'dns o ip del host')
+        string(name: 'containerPortApp', defaultValue: '5000', description: 'dns o ip del host')
+        string(name: 'pathLogHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        string(name: 'pathAppsetting', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        string(name: 'pathLogApp', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        string(name: 'network', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        string(name: 'pathYaml', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        
+    }
+ 
+    stages {
+        stage('version') {
+            steps {
+                script {
+                    def parameterMap = [:]
+                    parameterMap["remoteHost"] = remoteHost
+                    parameterMap["pathAppsetting"] = pathAppsetting
+                    parameterMap["pathLogApp"] = pathLogApp
+                    env.equalsVersion = directoryTree(parameterMap)
+                }
+            }
+        }
+
+        stage('yaml') {
+            when {
+                expression {
+                    return env.equalsVersion;
+                }
+            }
+            steps {
+                
+                script{
+                    
+                    def parameterMap = [:]
+                    parameterMap["containerName"] = params.containerName
+                    parameterMap["containerPort"] = params.containerPort
+                    parameterMap["containerPortApp"] = params.containerPortApp
+                    parameterMap["pathLogHost"] = params.pathLogHost
+                    parameterMap["pathAppsetting"] = params.pathAppsetting
+                    parameterMap["pathLogApp"] = params.pathLogApp
+                    parameterMap["network"] = params.network
+                    parameterMap["remoteHost"] = params.remoteHost
+                    parameterMap["pathYaml"] = params.pathYaml
+                    dockerb.createYaml(parameterMap)
+                    }
+                    
+                }  
+            
+        }
+    }
+
+}
