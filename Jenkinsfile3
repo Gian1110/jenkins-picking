@@ -23,7 +23,7 @@ pipeline {
                     parameterMap["remoteHost"] = remoteHost
                     parameterMap["pathAppsetting"] = pathAppsetting
                     parameterMap["pathLogApp"] = pathLogApp
-                    env.equalsVersion = directoryTree(parameterMap)
+                    env.equalsVersion = dockerb.directoryTree(parameterMap)
                 }
             }
         }
