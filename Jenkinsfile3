@@ -7,11 +7,11 @@ pipeline {
         string(name: 'containerName', defaultValue: 'cotodigitalback_picking', description: 'dns o ip del host')
         string(name: 'containerPort', defaultValue: '5000', description: 'dns o ip del host')
         string(name: 'containerPortApp', defaultValue: '5000', description: 'dns o ip del host')
-        string(name: 'pathLogHost', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'pathAppsetting', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'pathLogApp', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'network', defaultValue: '192.168.100.173', description: 'dns o ip del host')
-        string(name: 'pathYaml', defaultValue: '192.168.100.173', description: 'dns o ip del host')
+        string(name: 'pathLogHost', defaultValue: '/home/jenkinsuser/tree/logs/', description: 'dns o ip del host')
+        string(name: 'pathAppsetting', defaultValue: '/home/jenkinsuser/tree/settings/appsettings.json', description: 'dns o ip del host')
+        string(name: 'pathLogApp', defaultValue: '/app/log/', description: 'dns o ip del host')
+        string(name: 'network', defaultValue: 'central', description: 'dns o ip del host')
+        string(name: 'pathYaml', defaultValue: '/home/jenkinsuser/docker-compose.yaml', description: 'dns o ip del host')
         
     }
  
