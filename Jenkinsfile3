@@ -24,6 +24,7 @@ pipeline {
                     parameterMap["pathAppsetting"] = pathAppsetting
                     parameterMap["pathLogApp"] = pathLogHost
                     env.equalsVersion = dockerb.directoryTree(parameterMap)
+                    echo "${env.equalsVersion}"
                 }
             }
         }
