@@ -32,7 +32,7 @@ pipeline {
         stage('yaml') {
             when {
                 expression {
-                    return env.equalsVersion;
+                    return env.equalsVersion.toBoolean();
                 }
             }
             steps {
