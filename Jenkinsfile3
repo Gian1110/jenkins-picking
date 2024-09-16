@@ -26,7 +26,7 @@ pipeline {
                     parameterMap["division"] = division
                     parameterMap["pathLogApp"] = params.pathLogHost
                     parameterMap["pathAppsetting"] = params.pathAppsettingHost
-                    env.directoryTree = dockerBuild.directoryTree(parameterMap);
+                    env.directoryTree = dockerb.directoryTree(parameterMap);
                     echo "${directoryTree}"
                 }
             }
@@ -43,15 +43,17 @@ pipeline {
                 script{
                     
                     def parameterMap = [:]
-                    parameterMap["containerName"] = params.containerName
-                    parameterMap["containerPort"] = params.containerPort
-                    parameterMap["containerPortApp"] = params.containerPortApp
+                     parameterMap["division"] = division
+                    parameterMap["containerName"] = name_container
+                    parameterMap["imagenVersion"] = imagenVersion
+                    parameterMap["pathYaml"] = pathYamlFile
+                    parameterMap["ambiente"] = params.ambiente
+                    parameterMap["containerPort"] = params.portHost
+                    parameterMap["containerPortApp"] = portApp
                     parameterMap["pathLogHost"] = params.pathLogHost
-                    parameterMap["pathAppsetting"] = params.pathAppsetting
-                    parameterMap["pathLogApp"] = params.pathLogApp
-                    parameterMap["network"] = params.network
-                    parameterMap["remoteHost"] = params.remoteHost
-                    parameterMap["pathYaml"] = params.pathYaml
+                    parameterMap["pathLogApp"] = pathLogApp
+                    parameterMap["pathAppsetting"] = params.pathAppsettingHost
+                    parameterMap["network"] = network
                     dockerb.dockerEditYaml(parameterMap)
                     }
                     
