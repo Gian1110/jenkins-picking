@@ -27,6 +27,7 @@ pipeline {
                     parameterMap["division"] = division
                     parameterMap["pathLogApp"] = pathLogHost
                     parameterMap["pathAppsetting"] = pathAppsettingHost
+                    parameterMap["containerName"] = name_container
                     env.directoryTree = dockerb.directoryTree(parameterMap);
                     echo "${directoryTree}"
                 }
