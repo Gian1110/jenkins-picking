@@ -52,9 +52,9 @@ pipeline {
                     parameterMap["ambiente"] = params.ambiente
                     parameterMap["containerPort"] = params.portHost
                     parameterMap["containerPortApp"] = portApp
-                    parameterMap["pathLogHost"] = params.pathLogHost
+                    parameterMap["pathLogHost"] = pathLogHost
                     parameterMap["pathLogApp"] = pathLogApp
-                    parameterMap["pathAppsetting"] = params.pathAppsettingHost
+                    parameterMap["pathAppsetting"] = pathAppsettingHost
                     parameterMap["network"] = network
                     dockerb.dockerEditYaml(parameterMap)
                     }
