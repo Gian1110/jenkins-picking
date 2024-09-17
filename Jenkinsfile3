@@ -24,8 +24,8 @@ pipeline {
                 script {
                     def parameterMap = [:]
                     parameterMap["division"] = division
-                    parameterMap["pathLogApp"] = params.pathLogHost
-                    parameterMap["pathAppsetting"] = params.pathAppsettingHost
+                    parameterMap["pathLogApp"] = pathLogHost
+                    parameterMap["pathAppsetting"] = pathAppsettingHost
                     env.directoryTree = dockerb.directoryTree(parameterMap);
                     echo "${directoryTree}"
                 }
