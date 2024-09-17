@@ -23,6 +23,7 @@ pipeline {
             steps {
                 script {
                     def parameterMap = [:]
+                     parameterMap["ambiente"] = params.ambiente
                     parameterMap["division"] = division
                     parameterMap["pathLogApp"] = pathLogHost
                     parameterMap["pathAppsetting"] = pathAppsettingHost
