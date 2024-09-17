@@ -11,7 +11,7 @@ pipeline {
         name_container = 'api-core'
         pathYamlFile = '/home/jenkinsuser/api-core/docker-compose.yaml'
         pathLogHost = '/home/jenkinsuser/tree/api-core/logs/'
-        pathAppsettingHost = '/home/jenkinsuser/tree/api-core/settings/appsettings.json:/app/appsettings.json'
+        pathAppsettingHost = '/home/jenkinsuser/tree/api-core/settings/'
         division = 'host129b'
         portApp = '5023'
         pathLogApp = '/app/Logs/'
