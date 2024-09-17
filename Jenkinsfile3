@@ -37,7 +37,7 @@ pipeline {
         stage('yaml') {
             when {
                 expression {
-                    return env.equalsVersion.toBoolean();
+                    return env.directoryTree.toBoolean();
                 }
             }
             steps {
