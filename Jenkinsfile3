@@ -47,7 +47,7 @@ pipeline {
                     def parameterMap = [:]
                      parameterMap["division"] = division
                     parameterMap["containerName"] = name_container
-                    parameterMap["imagenVersion"] = imagenVersion
+                    // parameterMap["imagenVersion"] = imagenVersion
                     parameterMap["pathYaml"] = pathYamlFile
                     parameterMap["ambiente"] = params.ambiente
                     parameterMap["containerPort"] = params.portHost
